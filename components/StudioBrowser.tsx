@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Clock, MapPin, Star, Users } from "lucide-react";
+import Link from "next/link";
 
 export interface Studio {
   _id: string | { $oid: string };
@@ -89,12 +89,12 @@ function StudioCard({ studio }: { studio: Studio }) {
       </CardContent>
 
       <CardFooter className="px-5 pt-4 pb-5">
-        <Button
-          size="lg"
-          className="w-full rounded-lg bg-accent py-3 text-[15px] font-semibold text-white hover:bg-accent/90"
+        <Link
+          href={`/studios/${extractId(studio)}`}
+          className="inline-flex w-full items-center justify-center rounded-lg bg-accent py-3 text-[15px] font-semibold text-white transition hover:bg-accent/90"
         >
           View Details
-        </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

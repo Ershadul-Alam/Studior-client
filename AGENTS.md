@@ -3,32 +3,34 @@
 ## Commands
 
 - `npm run dev` — dev server at http://localhost:3000
-- `npm run build` — full check: compiles, typechecks TS, and prerenders all routes. Run this to verify changes; there is no test suite.
+- `npm run build` — the only verification step (compile + TypeScript + prerender). There is no test suite. It does **not** run ESLint.
+- `npm run lint` — currently reports 3 pre-existing `@next/next/no-html-link-for-pages` errors (`components/Categories.tsx`, `Footer.tsx`, `Logo.tsx`); don't assume they came from your change.
 
-## External backend (not in this repo)
+## Backend
 
-- The studios data comes from an API expected at `http://localhost:5000` (MongoDB-backed; Atlas URI in `.env`). It is often not running — `app/studios/page.jsx` fetches it at request time in a `try/catch` with a "No studios found" fallback. Keep that pattern for future DB-driven pages.
-- Unused `.env` vars are fine; `.env` is auto-loaded for both `dev` and `build`.
+- Studios come from an external API at `http://localhost:8000/studios` (not in this repo). It can be down; both call sites (`app/studios/page.jsx`, `components/Categories.tsx`) fetch in `try/catch` with a fallback. Keep that pattern.
+- `.env` contains `MONGODB_URI`, but this frontend has no Mongo code. The external API owns the database.
 
-## Next.js quirks (verified, easy to get wrong)
+## Next.js 16 / cache components
 
-- `next.config.ts` enables `cacheComponents`. Therefore `export const dynamic = "force-dynamic"` is a **build error**. Use `await connection()` (from `next/server`) inside a `<Suspense>`-wrapped async component for runtime data — see `app/studios/page.jsx` for the working pattern. Header/skeleton stays static while data streams.
-- Mixed extensions by convention: `.tsx` for root pages and components, `.jsx` for `app/about-us`, `app/how-it-works`, `app/studios` (plain JS, no TS types available there).
-- `next/image` remote URLs are whitelisted in `next.config.ts` `images.remotePatterns` (currently only `images.unsplash.com`). Add new hosts there before using external images.
-- Build output shows `◐ Partial Prerender` for `/studios` — expected, not an error.
+- `cacheComponents` is enabled. `export const dynamic = "force-dynamic"` is a **build error**.
+- Runtime data (`fetch`, `params`, `searchParams`, `connection()`) must be read inside a `<Suspense>`-wrapped async child; otherwise build fails with "uncached or runtime data during prerendering". `app/studios/page.jsx` and `app/studios/[id]/page.jsx` are the working references. A route that must block can use `export const instant = false`.
+- Mixed extensions by convention: `.tsx` for root pages/components; `.jsx` for `app/about-us`, `app/how-it-works`, and `app/studios` (including `[id]`).
+- `next/image` remote URLs must be whitelisted in `next.config.ts`; only `images.unsplash.com` is allowed today.
+- `◐ Partial Prerender` for `/studios` and `/studios/[id]` in build output is expected, not an error.
 
-## Styling
+## Styling / shadcn
 
-- Tailwind CSS v4 via `@tailwindcss/turbopack`, wired through a **custom `turbopack.rules` CSS loader** in `next.config.ts` (not the default plugin setup).
-- Theme tokens live in `app/globals.css`: `@theme { --color-accent: #cb5043 }` and a second `@theme inline` block of shadcn base tokens. Use `text-accent` / `bg-accent` for the brand red.
-- Site theme is black + red: dark sections use `bg-neutral-950`, cards `bg-white/5` with `ring-white/10`, text `text-white/60` level accents.
-- `@keyframes marquee` in `globals.css` looks unused but is required by `animate-[marquee_...]` in `components/StudioMarquee.tsx` — don't delete it as dead CSS.
+- Tailwind CSS v4 is wired through a custom `turbopack.rules` CSS loader in `next.config.ts` (not the default plugin setup).
+- Theme tokens live in `app/globals.css`. Brand red is `--color-accent: #cb5043`, used as `text-accent` / `bg-accent`. Site theme is black + red: `bg-neutral-950`, `bg-white/5`, `ring-white/10`, `text-white/60`-level accents.
+- Don't add `--color-accent: var(--accent)` back to the shadcn `@theme inline` block; it overrides the brand red with shadcn's near-white neutral `--accent`.
+- Keep `@keyframes marquee` in `globals.css`; it is used only via the arbitrary `animate-[marquee_...]` class in `components/StudioMarquee.tsx`.
+- shadcn style is `base-nova`; primitives in `components/ui/` import `cn` from the npm package `"cn"` (not `@/lib/utils`, which only re-exports it). `Button` wraps `@base-ui/react/button`, not Radix.
 
-## shadcn (style: `base-nova`)
+## Routes
 
-- Config in `components.json`; primitives in `components/ui/`. Note: ui components import `cn` from the npm package `"cn"` — **not** from `@/lib/utils` (which just re-exports it).
-- `Button` wraps `@base-ui/react/button`, not Radix. Icons are plain inline SVG or `lucide-react`.
-- shadcn base tokens are neutral/light; page sections override to the dark theme with arbitrary classes.
+- Existing routes: `/`, `/studios`, `/studios/[id]`, `/about-us`, `/how-it-works`.
+- `components/Navbar.tsx` links to `/about`, but the page lives at `app/about-us/page.jsx`.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
