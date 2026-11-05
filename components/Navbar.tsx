@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
+import UserMenu from "./UserMenu";
 
 const links: { label: string; href: string; dropdown?: boolean }[] = [
   { label: "Home", href: "/" },
@@ -63,12 +64,9 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-3">
-          <a
-            href="#"
-            className="hidden rounded-full bg-white px-7 py-3 text-[17px] font-semibold text-neutral-900 shadow-lg transition hover:bg-neutral-200 sm:inline-flex"
-          >
-            Get Started
-          </a>
+          <div className="hidden sm:flex">
+            <UserMenu />
+          </div>
 
           <button
             onClick={() => setOpen(!open)}
@@ -115,13 +113,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="p-2">
-              <a
-                href="#"
-                onClick={() => setOpen(false)}
-                className="block rounded-full bg-white px-6 py-3 text-center text-base font-semibold text-neutral-900"
-              >
-                Get Started
-              </a>
+              <UserMenu />
             </li>
           </ul>
         </div>
