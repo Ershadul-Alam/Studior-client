@@ -8,7 +8,7 @@ const links: { label: string; href: string; dropdown?: boolean }[] = [
   { label: "Home", href: "/" },
   { label: "Explore Studios", href: "/studios"},
   { label: "How It Works", href: "/how-it-works"},
-  { label: "About Us", href: "/about" },
+  { label: "About Us", href: "/about-us" },
 ];
 
 function ChevronDown() {
@@ -42,7 +42,7 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-30 transition-all duration-300 ${
         scrolled
-          ? "border-b border-white/10 bg-neutral-950/80 backdrop-blur"
+          ? "bg-neutral-950/80 backdrop-blur"
           : "bg-gradient-to-b from-neutral-950/70 to-transparent"
       }`}
     >

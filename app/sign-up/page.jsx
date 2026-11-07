@@ -3,22 +3,40 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Eye, EyeOff, Sparkles } from "lucide-react";
+import { authClient } from "../../lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function SignUpPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [notice, setNotice] = useState("");
 
-    function handleSubmit(event) {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        const user = Object.fromEntries(formData.entries())
 
         if (formData.get("password") !== formData.get("confirmPassword")) {
             setNotice("Your passwords don't match. Please check and try again.");
             return;
         }
 
-        setNotice("Account creation is not connected yet. Please try again later.");
+        const { name, email, password } = user;
+        const { data, error } = await authClient.signUp.email({
+            name,
+            email,
+            password,
+        });
+
+        if (error) {
+            setNotice(error.message || "We couldn't create your account. Please try again.");
+            return;
+        }
+
+        if (data) {
+            console.log(data);
+            redirect('/')
+        }
     }
 
     return (

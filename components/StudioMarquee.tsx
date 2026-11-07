@@ -37,7 +37,7 @@ export default function StudioMarquee() {
         INSIDE OUR STUDIOS
       </p>
 
-      <div className="flex w-max animate-[marquee_50s_linear_infinite] gap-4 hover:[animation-play-state:paused] group-hover:[animation-play-state:paused]">
+      <div className="flex w-max animate-[marquee_50s_linear_infinite] gap-4">
         {[...pics, ...pics].map((pic, index) => (
           <div
             key={`${pic.src}-${index}`}
@@ -46,7 +46,7 @@ export default function StudioMarquee() {
             <Image
               src={pic}
               alt={`Studio space ${(index % pics.length) + 1}`}
-              className="h-52 w-auto rounded-2xl object-cover transition duration-300 group-hover:scale-105 sm:h-64"
+              className="h-52 w-auto rounded-2xl object-cover transition duration-300 sm:h-64"
               sizes="400px"
             />
           </div>
