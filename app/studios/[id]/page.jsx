@@ -4,11 +4,11 @@ import { Suspense } from "react";
 import { connection } from "next/server";
 import {
   ArrowLeft,
-  CalendarDays,
   CheckCircle2,
   MapPin,
   Star,
 } from "lucide-react";
+import BookingCard from "../../../components/BookingCard";
 
 const API_URL = "http://localhost:8000";
 
@@ -199,80 +199,7 @@ async function StudioDetail({ params }) {
           )}
         </div>
 
-        <aside className="lg:sticky lg:top-28">
-          <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 shadow-2xl shadow-black/40">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold tracking-tight text-accent">
-                  {formatPrice(studio.hourlyRate)}
-                </span>
-                <span className="text-sm text-white/50">/ hour</span>
-              </div>
-              <span className="flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-sm font-semibold text-white">
-                <Star className="size-4 fill-accent text-accent" />
-                {studio.rating}
-              </span>
-            </div>
-
-            <dl className="mt-6 space-y-3 border-t border-white/10 pt-5 text-sm">
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-white/50">Security Deposit</dt>
-                <dd className="font-semibold text-white">
-                  {formatPrice(studio.securityDeposit)}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-white/50">Cancellation Policy</dt>
-                <dd className="text-right font-semibold text-accent">
-                  Free before shoot confirmation
-                </dd>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-white/50">Availability</dt>
-                <dd className="text-right font-semibold text-white">
-                  Instant Request Slots
-                </dd>
-              </div>
-            </dl>
-
-            <button
-              type="button"
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 py-4 text-[15px] font-bold text-white transition hover:bg-accent/90"
-            >
-              <CalendarDays className="size-5" />
-              Book Workspace Now
-            </button>
-
-            <p className="mt-4 text-center text-xs leading-relaxed text-white/40">
-              You won&apos;t be charged immediately. Your reservation will enter
-              pending status for host approval.
-            </p>
-          </div>
-
-          <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-            <div className="flex items-center gap-3">
-              <div className="flex size-11 items-center justify-center rounded-full bg-accent/15 text-sm font-bold text-accent">
-                {(studio.ownerName || "Host").slice(0, 1).toUpperCase()}
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/40">
-                  Hosted by
-                </p>
-                <p className="truncate font-semibold text-white">
-                  {studio.ownerName || "Studio host"}
-                </p>
-              </div>
-            </div>
-            {studio.ownerEmail && (
-              <a
-                href={`mailto:${studio.ownerEmail}`}
-                className="mt-4 block truncate rounded-lg border border-white/10 bg-neutral-950/40 px-3 py-2 text-sm text-white/60 transition hover:border-accent/40 hover:text-white"
-              >
-                {studio.ownerEmail}
-              </a>
-            )}
-          </div>
-        </aside>
+        <BookingCard studio={studio}/>
       </div>
     </>
   );
