@@ -3,14 +3,33 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Eye, EyeOff, Sparkles } from "lucide-react";
+import { authClient } from "../../lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function SignInPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [notice, setNotice] = useState("");
 
-    function handleSubmit(event) {
+    const handleSubmit = async(event) => {
         event.preventDefault();
-        setNotice("Sign-in is not connected yet. Please try again later.");
+        const formData = new FormData(event.currentTarget);
+        const user = Object.fromEntries(formData.entries())
+
+        const { email, password } = user;
+        const { data, error } = await authClient.signIn.email({
+            email,
+            password,
+        });
+
+        if (error) {
+            setNotice(error.message);
+            return;
+        }
+
+        if (data) {
+            console.log(data);
+            redirect('/')
+        }
     }
 
     return (
