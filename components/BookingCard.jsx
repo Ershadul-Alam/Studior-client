@@ -44,14 +44,26 @@ const BookingCard = ({ studio }) => {
             userEmail,
         };
 
-        console.log(booking);
+        try {
+            const response = await fetch("http://localhost:8000/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(booking),
+            });
 
-        // await fetch("/api/bookings", {
-        //     method: "POST",
-        //     headers: { "Content-Type": "application/json" },
-        //     body: JSON.stringify(booking),
-        // });
+            const data = await response.json();
 
+            if (response.ok) {
+                console.log("Booking confirmed!", data);
+                setDialogOpen(false);
+            } else {
+                console.error("Booking failed:", data.error);
+            }
+        } catch (error) {
+            console.error("Error submitting booking:", error);
+        }
     }
 
     return (
@@ -109,109 +121,109 @@ const BookingCard = ({ studio }) => {
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogContent className="max-h-[90vh] overflow-y-auto border border-white/10 bg-neutral-900 p-6 text-white sm:max-w-lg">
                     <form onSubmit={handleBooking} className="contents">
-                    <DialogHeader className="pr-8">
-                        <DialogTitle className="text-xl font-bold text-white">
-                            Complete your booking
-                        </DialogTitle>
-                        <DialogDescription className="text-white/55">
-                            Review the workspace details and choose your booking date.
-                        </DialogDescription>
-                    </DialogHeader>
+                        <DialogHeader className="pr-8">
+                            <DialogTitle className="text-xl font-bold text-white">
+                                Complete your booking
+                            </DialogTitle>
+                            <DialogDescription className="text-white/55">
+                                Review the workspace details and choose your booking date.
+                            </DialogDescription>
+                        </DialogHeader>
 
-                    <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-                        <div className="flex items-start justify-between gap-4">
-                            <div className="min-w-0">
-                                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
-                                    {studio.category || "Studio"}
-                                </p>
-                                <h3 className="mt-1 truncate text-lg font-bold text-white">
-                                    {studio.title || "Creative workspace"}
-                                </h3>
-                                {studio.location && (
-                                    <p className="mt-2 flex items-center gap-1.5 text-sm text-white/55">
-                                        <MapPin className="size-4 shrink-0 text-accent" />
-                                        {studio.location}
+                        <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                            <div className="flex items-start justify-between gap-4">
+                                <div className="min-w-0">
+                                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                                        {studio.category || "Studio"}
                                     </p>
-                                )}
+                                    <h3 className="mt-1 truncate text-lg font-bold text-white">
+                                        {studio.title || "Creative workspace"}
+                                    </h3>
+                                    {studio.location && (
+                                        <p className="mt-2 flex items-center gap-1.5 text-sm text-white/55">
+                                            <MapPin className="size-4 shrink-0 text-accent" />
+                                            {studio.location}
+                                        </p>
+                                    )}
+                                </div>
+                                <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-sm font-semibold text-white">
+                                    <Star className="size-4 fill-accent text-accent" />
+                                    {studio.rating}
+                                </span>
                             </div>
-                            <span className="flex shrink-0 items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-1 text-sm font-semibold text-white">
-                                <Star className="size-4 fill-accent text-accent" />
-                                {studio.rating}
-                            </span>
-                        </div>
 
-                        <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-white/10 pt-4 text-sm">
-                            <div>
-                                <dt className="text-xs text-white/45">Hourly rate</dt>
-                                <dd className="mt-1 font-semibold text-white">
-                                    {formatPrice(studio.hourlyRate)} / hour
-                                </dd>
-                            </div>
-                            <div>
-                                <dt className="text-xs text-white/45">Security deposit</dt>
-                                <dd className="mt-1 font-semibold text-white">
-                                    {formatPrice(studio.securityDeposit)}
-                                </dd>
-                            </div>
-                            {studio.maxCapacity && (
-                                <div className="col-span-2">
-                                    <dt className="text-xs text-white/45">Maximum capacity</dt>
+                            <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-white/10 pt-4 text-sm">
+                                <div>
+                                    <dt className="text-xs text-white/45">Hourly rate</dt>
                                     <dd className="mt-1 font-semibold text-white">
-                                        {studio.maxCapacity} people
+                                        {formatPrice(studio.hourlyRate)} / hour
                                     </dd>
                                 </div>
-                            )}
-                        </dl>
-                    </div>
+                                <div>
+                                    <dt className="text-xs text-white/45">Security deposit</dt>
+                                    <dd className="mt-1 font-semibold text-white">
+                                        {formatPrice(studio.securityDeposit)}
+                                    </dd>
+                                </div>
+                                {studio.maxCapacity && (
+                                    <div className="col-span-2">
+                                        <dt className="text-xs text-white/45">Maximum capacity</dt>
+                                        <dd className="mt-1 font-semibold text-white">
+                                            {studio.maxCapacity} people
+                                        </dd>
+                                    </div>
+                                )}
+                            </dl>
+                        </div>
 
-                    <div className="space-y-2">
-                        <p id="booking-date-label" className="text-sm font-semibold text-white">
-                            Booking date
-                        </p>
-                        <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                            <PopoverTrigger
-                                render={
-                                    <Button
-                                        id="booking-date"
-                                        aria-labelledby="booking-date-label"
-                                        type="button"
-                                        variant="outline"
-                                        className="h-12 w-full justify-start border-white/15 bg-neutral-950 text-left font-normal text-white hover:bg-white/5 hover:text-white"
+                        <div className="space-y-2">
+                            <p id="booking-date-label" className="text-sm font-semibold text-white">
+                                Booking date
+                            </p>
+                            <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                                <PopoverTrigger
+                                    render={
+                                        <Button
+                                            id="booking-date"
+                                            aria-labelledby="booking-date-label"
+                                            type="button"
+                                            variant="outline"
+                                            className="h-12 w-full justify-start border-white/15 bg-neutral-950 text-left font-normal text-white hover:bg-white/5 hover:text-white"
+                                        />
+                                    }
+                                >
+                                    <CalendarDays className="mr-2 size-4 text-accent" />
+                                    {selectedDate
+                                        ? format(selectedDate, "EEEE, MMMM d, yyyy")
+                                        : <span className="text-white/45">Select a date</span>}
+                                </PopoverTrigger>
+                                <PopoverContent
+                                    align="start"
+                                    className="w-auto border border-white/10 bg-neutral-900 p-2 text-white"
+                                >
+                                    <Calendar
+                                        mode="single"
+                                        selected={selectedDate}
+                                        onSelect={(date) => {
+                                            setSelectedDate(date);
+                                            if (date) setCalendarOpen(false);
+                                        }}
+                                        disabled={{ before: startOfToday() }}
+                                        className="bg-neutral-900 text-white"
                                     />
-                                }
-                            >
-                                <CalendarDays className="mr-2 size-4 text-accent" />
-                                {selectedDate
-                                    ? format(selectedDate, "EEEE, MMMM d, yyyy")
-                                    : <span className="text-white/45">Select a date</span>}
-                            </PopoverTrigger>
-                            <PopoverContent
-                                align="start"
-                                className="w-auto border border-white/10 bg-neutral-900 p-2 text-white"
-                            >
-                                <Calendar
-                                    mode="single"
-                                    selected={selectedDate}
-                                    onSelect={(date) => {
-                                        setSelectedDate(date);
-                                        if (date) setCalendarOpen(false);
-                                    }}
-                                    disabled={{ before: startOfToday() }}
-                                    className="bg-neutral-900 text-white"
-                                />
-                            </PopoverContent>
-                        </Popover>
-                    </div>
+                                </PopoverContent>
+                            </Popover>
+                        </div>
 
-                    <DialogFooter className="-mx-6 -mb-6 mt-1 border-white/10 bg-white/[0.03] px-6 py-4 sm:flex-row">
-                        <Button
-                            type="submit"
-                            disabled={!selectedDate}
-                            className="w-full bg-accent font-bold text-white hover:bg-accent/90 sm:w-auto"
-                        >
-                            Confirm booking
-                        </Button>
-                    </DialogFooter>
+                        <DialogFooter className="-mx-6 -mb-6 mt-1 border-white/10 bg-white/[0.03] px-6 py-4 sm:flex-row">
+                            <Button
+                                type="submit"
+                                disabled={!selectedDate}
+                                className="w-full bg-accent font-bold text-white hover:bg-accent/90 sm:w-auto"
+                            >
+                                Confirm booking
+                            </Button>
+                        </DialogFooter>
                     </form>
                 </DialogContent>
             </Dialog>
