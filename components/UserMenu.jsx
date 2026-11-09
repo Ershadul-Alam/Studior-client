@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import {
   HoverCard,
@@ -10,7 +12,34 @@ import {
 
 const UserMenu = () => {
   const { data: session, isPending } = authClient.useSession();
+  const router = useRouter();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
   const user = session?.user;
+
+  async function handleSignOut() {
+    setIsSigningOut(true);
+    setSignOutError("");
+
+    try {
+      const { error } = await authClient.signOut();
+
+      if (error) {
+        setSignOutError(error.message || "Unable to sign out. Please try again.");
+        return;
+      }
+
+      router.replace("/");
+    } catch (error) {
+      setSignOutError(
+        error instanceof Error
+          ? error.message
+          : "Unable to sign out. Please try again.",
+      );
+    } finally {
+      setIsSigningOut(false);
+    }
+  }
 
   if (isPending) return null;
 
@@ -42,6 +71,19 @@ const UserMenu = () => {
             >
               Your studio
             </Link>
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={isSigningOut}
+              className="rounded-lg px-3 py-2.5 text-left text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSigningOut ? "Signing out..." : "Sign Out"}
+            </button>
+            {signOutError && (
+              <p role="alert" className="px-3 py-2 text-sm text-red-400">
+                {signOutError}
+              </p>
+            )}
           </nav>
         </HoverCardContent>
       </HoverCard>
