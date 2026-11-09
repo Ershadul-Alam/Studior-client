@@ -26,8 +26,8 @@ function StudioCard({ studio, onDelete, isDeleting }) {
     const imageUrl = studio.imageUrl || "/banner.jpg";
 
     return (
-        <article className="flex overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06]">
-            <div className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-56">
+        <article className="flex h-32 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06] sm:h-40">
+            <div className="relative h-full w-32 shrink-0 bg-neutral-900 sm:w-56">
                 <Image
                     src={imageUrl}
                     alt={studio.title || "Studio"}
@@ -38,29 +38,31 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                 />
             </div>
 
-            <div className="flex min-w-0 flex-1 flex-col justify-center gap-2 p-3 sm:gap-3 sm:p-4">
+            <div className="grid min-h-0 min-w-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-y-0.5 overflow-hidden p-2 sm:gap-y-1 sm:p-3">
                 <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
-                    <p className="text-xs font-bold tracking-[0.15em] text-accent uppercase">
+                    <p className="truncate text-[10px] font-bold tracking-[0.12em] text-accent uppercase sm:text-xs sm:tracking-[0.15em]">
                         {studio.category || "Studio"}
                     </p>
-                    <span className="shrink-0 rounded-lg border border-accent/30 bg-accent/10 px-3 py-1.5 text-base font-bold text-accent sm:text-lg">
+                    <span className="shrink-0 rounded-md border border-accent/30 bg-accent/10 px-2 py-0.5 text-xs font-bold text-accent sm:rounded-lg sm:py-1 sm:text-base">
                         ${Number(studio.hourlyRate || 0)}/hr
                     </span>
                 </div>
 
-                <div className="min-w-0">
-                    <h2 className="truncate text-lg font-semibold text-white sm:text-2xl">
+                <div className="flex min-h-0 min-w-0 flex-col justify-center overflow-hidden">
+                    <h2 className="truncate text-sm font-semibold text-white sm:text-lg">
                         {studio.title || "Untitled studio"}
                     </h2>
-                    <p className="mt-1 flex items-center gap-2 text-sm text-white/60">
-                        <MapPin aria-hidden="true" className="size-4 shrink-0 text-accent" />
-                        <span className="truncate">{studio.location || "Location not provided"}</span>
+                    <p className="mt-0.5 flex min-w-0 items-center gap-1 text-xs text-white/60 sm:gap-1.5 sm:text-xs">
+                        <MapPin aria-hidden="true" className="size-3 shrink-0 text-accent sm:size-4" />
+                        <span className="truncate">
+                            {studio.location || "Location not provided"}
+                        </span>
                     </p>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-sm text-white/70">
-                    <span className="inline-flex items-center gap-2">
-                        <Users aria-hidden="true" className="size-4 text-accent" />
+                <div className="flex min-w-0 items-center gap-1.5 text-xs text-white/70">
+                    <span className="inline-flex min-w-0 items-center gap-1.5">
+                        <Users aria-hidden="true" className="size-3.5 shrink-0 text-accent sm:size-4" />
                         Up to {studio.maxCapacity || 0}
                     </span>
                 </div>
@@ -68,10 +70,10 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                 <div className="flex items-center justify-between gap-3">
                     <Link
                         href={`/studios/${encodeURIComponent(getStudioId(studio))}`}
-                        className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-white transition hover:text-accent"
+                        className="inline-flex min-w-0 items-center gap-1 text-xs font-semibold whitespace-nowrap text-white transition hover:text-accent"
                     >
-                        View studio
-                        <ArrowRight aria-hidden="true" className="size-4" />
+                        <span className="truncate">View studio</span>
+                        <ArrowRight aria-hidden="true" className="size-3.5 shrink-0" />
                     </Link>
                     <button
                         type="button"
@@ -79,7 +81,7 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                         title="Delete studio"
                         disabled={isDeleting}
                         onClick={() => onDelete(studio)}
-                        className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
+                        className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
                     >
                         {isDeleting ? (
                             <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />

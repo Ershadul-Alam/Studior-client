@@ -31,8 +31,8 @@ const BookingCard = ({ studio }) => {
     const [selectedDate, setSelectedDate] = useState();
     const [calendarOpen, setCalendarOpen] = useState(false);
 
-    const userName = user?.name ?? "User not Signed In";
-    const userEmail = user?.email ?? "User not Signed In";
+    const clientName = user?.name ?? "User not Signed In";
+    const clientEmail = user?.email ?? "User not Signed In";
 
     const handleBooking = async (e) => {
         e.preventDefault();
@@ -41,8 +41,8 @@ const BookingCard = ({ studio }) => {
         const booking = {
             studioId: studio._id,
             bookingDate: format(selectedDate, "yyyy-MM-dd"),
-            userName,
-            userEmail,
+            clientName,
+            clientEmail,
         };
 
         try {

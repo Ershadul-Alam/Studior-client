@@ -66,6 +66,12 @@ const UserMenu = () => {
                             Profile
                         </Link>
                         <Link
+                            href="/bookings"
+                            className="rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10"
+                        >
+                            Bookings
+                        </Link>
+                        <Link
                             href="/your-studio"
                             className="rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10"
                         >
