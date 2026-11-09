@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Aboreto } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/toast";
 import "./globals.css";
 
 const AboretoFont = Aboreto({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

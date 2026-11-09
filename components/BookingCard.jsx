@@ -18,6 +18,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { toast } from "@/components/ui/toast";
 
 function formatPrice(value) {
     return `$${Number(value || 0).toLocaleString("en-US")}`;
@@ -56,13 +57,27 @@ const BookingCard = ({ studio }) => {
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Booking confirmed!", data);
+                toast.add({
+                    title: "Booking confirmed!",
+                    description: `Your booking request for ${studio.title || "this studio"} has been submitted.`,
+                    type: "success",
+                });
                 setDialogOpen(false);
             } else {
-                console.error("Booking failed:", data.error);
+                toast.add({
+                    title: "Booking failed",
+                    description: data.message || data.error || "Please try again.",
+                    type: "error",
+                });
+                setDialogOpen(false);
             }
         } catch (error) {
             console.error("Error submitting booking:", error);
+            toast.add({
+                title: "Booking failed",
+                description: "Unable to submit your booking. Please try again.",
+                type: "error",
+            });
         }
     }
 
