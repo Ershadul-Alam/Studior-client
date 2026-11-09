@@ -122,6 +122,7 @@ async function StudioDetail({ params }) {
               priority
               sizes="(min-width: 1024px) 1000px, 100vw"
               className="object-cover"
+              unoptimized={imageUrl.startsWith("data:")}
             />
             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-neutral-950/85 to-transparent" />
             <span className="absolute right-4 bottom-4 rounded-full bg-neutral-950/80 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur">

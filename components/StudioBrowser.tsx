@@ -56,6 +56,7 @@ function StudioCard({ studio }: { studio: Studio }) {
           fill
           sizes="(min-width: 1280px) 340px, (min-width: 1024px) 430px, (min-width: 640px) 640px, 100vw"
           className="object-cover"
+          unoptimized={studio.imageUrl.startsWith("data:")}
         />
         <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-neutral-950/80 px-2.5 py-1 text-xs font-bold text-white backdrop-blur">
           <Star className="size-3.5 fill-accent text-accent" />
