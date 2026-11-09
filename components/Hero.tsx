@@ -96,7 +96,7 @@ export default function Hero() {
                 Discover studios
               </a>
               <a
-                href="#"
+                href="/add-studio"
                 className="rounded-lg bg-white px-7 py-3.5 text-[14px] font-semibold text-neutral-900 transition hover:bg-neutral-200"
               >
                 List your studio
