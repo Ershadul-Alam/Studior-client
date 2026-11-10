@@ -7,7 +7,7 @@ import UserMenu from "./UserMenu";
 const links: { label: string; href: string; dropdown?: boolean }[] = [
   { label: "Home", href: "/" },
   { label: "Explore Studios", href: "/studios"},
-  { label: "How It Works", href: "/how-it-works"},
+  { label: "How It Works", href: "#how-it-works"},
   { label: "About Us", href: "/about-us" },
 ];
 
@@ -38,6 +38,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  function handleNavClick(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    if (href !== "#how-it-works") return;
+
+    const section = document.getElementById("how-it-works");
+    if (!section) return;
+
+    event.preventDefault();
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    setOpen(false);
+  }
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-30 transition-all duration-300 ${
@@ -54,6 +65,7 @@ export default function Navbar() {
             <li key={link.label}>
               <a
                 href={link.href}
+                onClick={(event) => handleNavClick(event, link.href)}
                 className="group flex items-center gap-1.5 text-[17px] font-medium text-white/90 transition-colors hover:text-white"
               >
                 {link.label}
@@ -105,7 +117,10 @@ export default function Navbar() {
               <li key={link.label}>
                 <a
                   href={link.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(event) => {
+                    handleNavClick(event, link.href);
+                    setOpen(false);
+                  }}
                   className="block rounded-xl px-4 py-3 text-base font-medium text-white/90 transition hover:bg-white/10"
                 >
                   {link.label}

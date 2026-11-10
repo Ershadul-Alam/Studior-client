@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import StudioMarquee from "@/components/StudioMarquee";
 import Categories from "@/components/Categories";
+import HowItWorks from "@/components/HowItWorks";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <StudioMarquee />
       <Categories />
+      <HowItWorks />
     </>
   );
 }
