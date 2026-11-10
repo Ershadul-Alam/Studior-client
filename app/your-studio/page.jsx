@@ -14,6 +14,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import EditStudioDialog from "../../components/EditStudioDialog";
 
 const API_URL = "http://localhost:8000";
 
@@ -75,6 +76,8 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                         <span className="truncate">View studio</span>
                         <ArrowRight aria-hidden="true" className="size-3.5 shrink-0" />
                     </Link>
+                    <div className="gap-2">
+                    <EditStudioDialog/>
                     <button
                         type="button"
                         aria-label={`Delete ${studio.title || "studio"}`}
@@ -82,13 +85,14 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                         disabled={isDeleting}
                         onClick={() => onDelete(studio)}
                         className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
-                    >
+                        >
                         {isDeleting ? (
                             <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
                         ) : (
                             <Trash2 aria-hidden="true" className="size-4" />
                         )}
                     </button>
+                        </div>
                 </div>
             </div>
         </article>
