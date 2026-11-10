@@ -8,9 +8,17 @@ import {
     CalendarDays,
     LoaderCircle,
     MapPin,
-    XCircle,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "@/components/ui/button";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog";
 
 const API_URL = "http://localhost:8000";
 
@@ -39,6 +47,8 @@ function formatBookingDate(value) {
 function formatPrice(value) {
     return `$${Number(value || 0).toLocaleString("en-US")}/hr`;
 }
+
+
 
 function BookingCard({ booking, studio, onCancel, isCancelling }) {
     const studioId = getStudioId(booking);
@@ -115,13 +125,13 @@ function BookingCard({ booking, studio, onCancel, isCancelling }) {
                         className="inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2 text-xs font-semibold whitespace-nowrap text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60 sm:h-7 sm:px-2.5"
                     >
                         {isCancelling ? (
-                            <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
+                            <>
+                                <LoaderCircle aria-hidden="true" className="size-3.5 animate-spin" />
+                                Cancelling...
+                            </>
                         ) : (
-                            <XCircle aria-hidden="true" className="size-4" />
+                            "Cancel booking"
                         )}
-                        <span className="hidden sm:inline">
-                            {isCancelling ? "Cancelling..." : "Cancel booking"}
-                        </span>
                     </button>
                 </div>
             </div>
@@ -147,6 +157,7 @@ export default function BookingsPage() {
     const [reloadKey, setReloadKey] = useState(0);
     const [cancellingId, setCancellingId] = useState("");
     const [cancelError, setCancelError] = useState("");
+    const [bookingToCancel, setBookingToCancel] = useState(null);
 
     const user = session?.user;
     const email = user?.email?.trim().toLowerCase();
@@ -234,7 +245,7 @@ export default function BookingsPage() {
         const id = getId(booking);
         if (!id) {
             setCancelError("This booking is missing its ID and can't be cancelled.");
-            return;
+            return false;
         }
 
         setCancellingId(id);
@@ -242,7 +253,7 @@ export default function BookingsPage() {
 
         try {
             const response = await fetch(
-                `${API_URL}/bookings/${encodeURIComponent(id)}`,
+                `${API_URL}/booking/${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
                     credentials: "include",
@@ -250,18 +261,29 @@ export default function BookingsPage() {
             );
             if (!response.ok) {
                 setCancelError(`Couldn't cancel this booking (HTTP ${response.status}).`);
-                return;
+                return false;
             }
 
             setBookingResult((current) => ({
                 ...current,
                 bookings: current.bookings.filter((item) => getId(item) !== id),
             }));
+            return true;
         } catch (error) {
             console.error("Failed to cancel booking:", error);
             setCancelError("Couldn't reach the booking service. Please try again.");
+            return false;
         } finally {
             setCancellingId("");
+        }
+    }
+
+    async function confirmCancelBooking() {
+        if (!bookingToCancel) return;
+
+        const cancelled = await cancelBooking(bookingToCancel);
+        if (cancelled) {
+            setBookingToCancel(null);
         }
     }
 
@@ -344,11 +366,6 @@ export default function BookingsPage() {
                                 {studioError} Booking and cancellation actions are still available.
                             </p>
                         )}
-                        {cancelError && (
-                            <p className="text-sm text-red-300" role="alert">
-                                {cancelError}
-                            </p>
-                        )}
                         {bookings.map((booking, index) => {
                             const id = getId(booking);
                             return (
@@ -356,7 +373,10 @@ export default function BookingsPage() {
                                     key={id || `${booking.studioId}-${booking.bookingDate}-${index}`}
                                     booking={booking}
                                     studio={studiosById.get(getStudioId(booking))}
-                                    onCancel={cancelBooking}
+                                    onCancel={(item) => {
+                                        setBookingToCancel(item);
+                                        setCancelError("");
+                                    }}
                                     isCancelling={cancellingId === id}
                                 />
                             );
@@ -364,6 +384,61 @@ export default function BookingsPage() {
                     </div>
                 )}
             </div>
+            <Dialog
+                open={Boolean(bookingToCancel)}
+                onOpenChange={(open) => {
+                    if (!open && !cancellingId) {
+                        setBookingToCancel(null);
+                        setCancelError("");
+                    }
+                }}
+            >
+                <DialogContent className="border border-white/10 bg-neutral-900 text-white">
+                    <DialogHeader>
+                        <DialogTitle className="text-lg font-semibold">
+                            Cancel this booking?
+                        </DialogTitle>
+                        <DialogDescription className="text-white/60">
+                            Are you sure you want to cancel this studio booking? This action cannot be undone.
+                        </DialogDescription>
+                    </DialogHeader>
+                    {cancelError && (
+                        <p className="text-sm text-red-300" role="alert">
+                            {cancelError}
+                        </p>
+                    )}
+                    <DialogFooter className="border-white/10 bg-white/[0.03]">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            disabled={Boolean(cancellingId)}
+                            onClick={() => {
+                                setBookingToCancel(null);
+                                setCancelError("");
+                            }}
+                            className="border-white/15 bg-transparent text-white hover:bg-white/10 hover:text-white"
+                        >
+                            Keep booking
+                        </Button>
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            disabled={Boolean(cancellingId)}
+                            onClick={() => void confirmCancelBooking()}
+                            className="bg-red-600 text-white hover:bg-red-700"
+                        >
+                            {cancellingId ? (
+                                <>
+                                    <LoaderCircle aria-hidden="true" className="animate-spin" />
+                                    Cancelling...
+                                </>
+                            ) : (
+                                "Confirm cancellation"
+                            )}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </main>
     );
 }
