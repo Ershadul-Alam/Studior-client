@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import EditStudioDialog from "../../components/EditStudioDialog";
 
-const API_URL = "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function getStudioId(studio) {
     if (typeof studio._id === "string") return studio._id;

@@ -105,7 +105,7 @@ async function fetchCounts() {
   let studios = null;
 
   try {
-    const res = await fetch("http://localhost:8000/studios");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/studios`);
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
     studios = await res.json();
   } catch (err) {

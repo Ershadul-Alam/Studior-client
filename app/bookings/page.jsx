@@ -21,7 +21,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 
-const API_URL = "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 function getId(value) {
     const id = value?._id ?? value?.id;

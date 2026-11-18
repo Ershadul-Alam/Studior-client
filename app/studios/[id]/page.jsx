@@ -13,8 +13,7 @@ import {
 } from "lucide-react";
 
 
-const API_URL = "http://localhost:8000";
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 function formatCategory(category = "") {
   return category
     .trim()
@@ -86,7 +85,7 @@ async function StudioDetail({ params }) {
         <p className="mx-auto mt-3 max-w-md text-white/60">
           {error === "not-found"
             ? "This studio may no longer be available."
-            : "Make sure the API is running on localhost:8000 and try again."}
+            : "Make sure the API is running and try again."}
         </p>
         <Link
           href="/studios"

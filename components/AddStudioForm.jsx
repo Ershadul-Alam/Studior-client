@@ -100,7 +100,7 @@ export default function AddStudioForm() {
 
       const token = await getTokenFromClient();
 
-      const response = await fetch("http://localhost:8000/add-studio", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/add-studio`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
