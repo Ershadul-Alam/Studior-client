@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 import {
     ArrowRight,
     CalendarDays,
@@ -251,12 +252,16 @@ export default function BookingsPage() {
         setCancellingId(id);
         setCancelError("");
 
+        const token = await getTokenFromClient();
         try {
             const response = await fetch(
                 `${API_URL}/booking/${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
                     credentials: "include",
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 },
             );
             if (!response.ok) {

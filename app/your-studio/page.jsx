@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, LoaderCircle, MapPin, Trash2, Users } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 import {
     Dialog,
     DialogContent,
@@ -77,22 +78,22 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                         <ArrowRight aria-hidden="true" className="size-3.5 shrink-0" />
                     </Link>
                     <div className="gap-2">
-                    <EditStudioDialog/>
-                    <button
-                        type="button"
-                        aria-label={`Delete ${studio.title || "studio"}`}
-                        title="Delete studio"
-                        disabled={isDeleting}
-                        onClick={() => onDelete(studio)}
-                        className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
+                        <EditStudioDialog />
+                        <button
+                            type="button"
+                            aria-label={`Delete ${studio.title || "studio"}`}
+                            title="Delete studio"
+                            disabled={isDeleting}
+                            onClick={() => onDelete(studio)}
+                            className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
                         >
-                        {isDeleting ? (
-                            <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
-                        ) : (
-                            <Trash2 aria-hidden="true" className="size-4" />
-                        )}
-                    </button>
-                        </div>
+                            {isDeleting ? (
+                                <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />
+                            ) : (
+                                <Trash2 aria-hidden="true" className="size-4" />
+                            )}
+                        </button>
+                    </div>
                 </div>
             </div>
         </article>
@@ -189,12 +190,16 @@ export default function YourStudioPage() {
         setDeletingId(id);
         setDeleteError("");
 
+        const token = await getTokenFromClient();
         try {
             const response = await fetch(
                 `${API_URL}/your-studio/${encodeURIComponent(id)}`,
                 {
                     method: "DELETE",
-                    credentials: "include"
+                    credentials: "include",
+                    headers: {
+                        authorization: `Bearer ${token}`,
+                    },
                 },
             )
             if (!response.ok) {

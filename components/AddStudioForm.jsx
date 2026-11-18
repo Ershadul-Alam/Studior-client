@@ -3,6 +3,10 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import { Input } from "@/components/ui/input";
+import getTokenFromClient from "@/lib/getTokenFromClient";
+
 import {
   ArrowLeft,
   ArrowRight,
@@ -10,8 +14,6 @@ import {
   LoaderCircle,
   Sparkles,
 } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
-import { Input } from "@/components/ui/input";
 
 const fieldClassName =
   "mt-2 h-12 rounded-xl border-white/15 bg-neutral-950/80 px-4 text-sm text-white shadow-none placeholder:text-white/50 focus-visible:border-accent/70 focus-visible:ring-accent/10";
@@ -96,9 +98,14 @@ export default function AddStudioForm() {
         ownerEmail: user.email,
       };
 
+      const token = await getTokenFromClient();
+
       const response = await fetch("http://localhost:8000/add-studio", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify(studio),
       });
 

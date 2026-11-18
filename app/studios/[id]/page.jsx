@@ -2,13 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { connection } from "next/server";
+import BookingCard from "../../../components/BookingCard";
+import getTokenFromServer from "../../../lib/getTokenFromServer";
+
 import {
   ArrowLeft,
   CheckCircle2,
   MapPin,
   Star,
 } from "lucide-react";
-import BookingCard from "../../../components/BookingCard";
+
 
 const API_URL = "http://localhost:8000";
 
@@ -51,13 +54,19 @@ function DetailSkeleton() {
 
 async function StudioDetail({ params }) {
   const { id } = await params;
-  await connection(); // fetch freshly from the API at request time
+  await connection(); 
 
   let studio = null;
   let error = "";
 
+  const token = await getTokenFromServer();
+
   try {
-    const res = await fetch(`${API_URL}/studios/${encodeURIComponent(id)}`);
+    const res = await fetch(`${API_URL}/studios/${encodeURIComponent(id)}`,{
+      headers:{
+        authorization: `Bearer ${token}`,
+      }
+    });
     if (!res.ok) {
       throw new Error(res.status === 404 ? "not-found" : `Request failed: ${res.status}`);
     }

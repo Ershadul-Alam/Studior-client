@@ -5,6 +5,7 @@ import { CalendarDays, MapPin, Star } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import getTokenFromClient from "@/lib/getTokenFromClient";
 import {
     Dialog,
     DialogContent,
@@ -45,11 +46,14 @@ const BookingCard = ({ studio }) => {
             clientEmail,
         };
 
+        const token = await getTokenFromClient();
+
         try {
             const response = await fetch("http://localhost:8000/bookings", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(booking),
             });
