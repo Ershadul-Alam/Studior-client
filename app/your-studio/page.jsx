@@ -24,7 +24,7 @@ function getStudioId(studio) {
     return studio._id?.$oid ?? "";
 }
 
-function StudioCard({ studio, onDelete, isDeleting }) {
+function StudioCard({ studio, onDelete, onStudioUpdated, isDeleting }) {
     const imageUrl = studio.imageUrl || "/banner.jpg";
 
     return (
@@ -78,7 +78,10 @@ function StudioCard({ studio, onDelete, isDeleting }) {
                         <ArrowRight aria-hidden="true" className="size-3.5 shrink-0" />
                     </Link>
                     <div className="gap-2">
-                        <EditStudioDialog />
+                        <EditStudioDialog
+                            studio={studio}
+                            onUpdated={onStudioUpdated}
+                        />
                         <button
                             type="button"
                             aria-label={`Delete ${studio.title || "studio"}`}
@@ -175,6 +178,15 @@ export default function YourStudioPage() {
     function handleDelete(studio) {
         setDeleteError("");
         setStudioToDelete(studio);
+    }
+
+    function handleStudioUpdated(id, updates) {
+        setStudioResult((current) => ({
+            ...current,
+            studios: current.studios.map((studio) =>
+                getStudioId(studio) === id ? { ...studio, ...updates } : studio,
+            ),
+        }));
     }
 
     async function confirmDelete() {
@@ -331,6 +343,7 @@ export default function YourStudioPage() {
                                 key={getStudioId(studio) || `${studio.title}-${index}`}
                                 studio={studio}
                                 onDelete={handleDelete}
+                                onStudioUpdated={handleStudioUpdated}
                                 isDeleting={deletingId === getStudioId(studio)}
                             />
                         ))}
