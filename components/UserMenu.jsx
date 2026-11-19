@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
+/** @param {{ placement?: string; onSignedOut?: () => void }} props */
 const UserMenu = ({ placement = "header", onSignedOut } = {}) => {
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
