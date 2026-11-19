@@ -1,52 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
+import HowItWorksButton from "./HowItWorksButton";
 
-// const features = [
-//   {
-//     label: "Considered creative spaces",
-//     icon: (
-//       <>
-//         <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-//         <circle cx="12" cy="13" r="3" />
-//       </>
-//     ),
-//   },
-//   {
-//     label: "Flexible, by-the-hour booking",
-//     icon: (
-//       <>
-//         <circle cx="12" cy="12" r="10" />
-//         <path d="M12 6v6l4 2" />
-//       </>
-//     ),
-//   },
-//   {
-//     label: "Effortless online reservations",
-//     icon: (
-//       <>
-//         <path d="M8 2v4" />
-//         <path d="M16 2v4" />
-//         <rect width="18" height="18" x="3" y="4" rx="2" />
-//         <path d="M3 10h18" />
-//       </>
-//     ),
-//   },
-// ];
 
-// function FeatureIcon({ children }: { children: React.ReactNode }) {
-//   return (
-//     <svg
-//       viewBox="0 0 24 24"
-//       fill="none"
-//       stroke="currentColor"
-//       strokeWidth="2"
-//       strokeLinecap="round"
-//       strokeLinejoin="round"
-//       className="mt-0.5 size-5 shrink-0 text-accent"
-//     >
-//       {children}
-//     </svg>
-//   );
-// }
 
 export default function Hero() {
   return (
@@ -62,17 +18,6 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/10 to-black/70" />
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-1 flex-col px-6 pb-14 pt-36 sm:pt-44 lg:px-10 lg:pb-20">
-        {/* <ul className="flex flex-col gap-5">
-          {features.map((feature) => (
-            <li
-              key={feature.label}
-              className="flex items-center gap-3 text-lg text-white/90 sm:text-xl"
-            >
-              <FeatureIcon>{feature.icon}</FeatureIcon>
-              {feature.label}
-            </li>
-          ))}
-        </ul> */}
 
         <div className="mt-auto grid items-end gap-12 pt-20 lg:grid-cols-[1fr_auto]">
           <div className="max-w-3xl">
@@ -89,18 +34,13 @@ export default function Hero() {
               you want to bring to life.
             </p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <a
+              <Link
                 href="/studios"
                 className="rounded-lg bg-accent px-7 py-3.5 text-[14px] font-semibold text-white transition hover:bg-accent/90"
               >
                 Discover studios
-              </a>
-              <a
-                href="/add-studio"
-                className="rounded-lg bg-white px-7 py-3.5 text-[14px] font-semibold text-neutral-900 transition hover:bg-neutral-200"
-              >
-                List your studio
-              </a>
+              </Link>
+              <HowItWorksButton />
             </div>
           </div>
 
