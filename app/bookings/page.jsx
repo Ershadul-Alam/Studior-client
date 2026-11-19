@@ -20,6 +20,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/toast";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -289,6 +290,11 @@ export default function BookingsPage() {
         const cancelled = await cancelBooking(bookingToCancel);
         if (cancelled) {
             setBookingToCancel(null);
+            toast.add({
+                title: "Booking cancelled",
+                description: "Your studio booking has been cancelled.",
+                type: "success",
+            });
         }
     }
 

@@ -15,6 +15,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/toast";
 import EditStudioDialog from "../../components/EditStudioDialog";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -244,6 +245,11 @@ export default function YourStudioPage() {
                 ),
             }));
             setStudioToDelete(null);
+            toast.add({
+                title: "Studio deleted",
+                description: `${studio.title || "Your studio"} has been deleted successfully.`,
+                type: "success",
+            });
         } catch (error) {
             setDeleteError(
                 error instanceof Error && error.message

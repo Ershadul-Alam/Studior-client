@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import getTokenFromClient from "@/lib/getTokenFromClient";
+import { toast } from "@/components/ui/toast";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -105,6 +106,11 @@ const EditStudioDialog = ({ studio, onUpdated }) => {
 
       onUpdated(studioId, updates);
       setIsOpen(false);
+      toast.add({
+        title: "Studio updated",
+        description: `${updates.title || studio.title || "Your studio"} has been updated successfully.`,
+        type: "success",
+      });
     } catch (error) {
       console.error("Failed to update studio:", error);
       setSubmitError(

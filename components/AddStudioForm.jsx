@@ -313,7 +313,7 @@ export default function AddStudioForm() {
 
               <div>
                 <label className={labelClassName} htmlFor="image">
-                  Studio image
+                  Studio image (maximum 10Mb)
                 </label>
                 <Input
                   accept="image/*"

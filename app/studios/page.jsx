@@ -48,9 +48,6 @@ async function StudioGrid({ searchParams }) {
     return (
       <div className="mt-16 rounded-2xl border border-white/10 bg-white/5 px-6 py-12 text-center">
         <p className="text-lg font-semibold text-white">No studios found</p>
-        <p className="mt-2 text-white/60">
-          Couldn&apos;t load studios. Make sure the API is running.
-        </p>
       </div>
     );
   }
