@@ -110,17 +110,17 @@ export default function AboutUsPage() {
 
             <div className="rounded-2xl border border-white/10 bg-neutral-950/70 p-6 sm:p-7">
               <p className="text-xs font-bold tracking-[0.16em] text-white/45">
-                SAMPLE CONTACT DETAILS
+                CONTACT DETAILS
               </p>
               <div className="mt-5 space-y-4">
                 <a
-                  href="mailto:hello@studiro.example"
+                  href="mailto:kazisourav8@gmail.com"
                   className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 p-4 transition hover:border-accent/60"
                 >
                   <span>
                     <span className="block text-xs text-white/45">EMAIL</span>
                     <span className="mt-1 block font-medium text-white">
-                      hello@studiro.example
+                      kazisourav8@gmail.com
                     </span>
                   </span>
                   <span aria-hidden="true" className="text-accent transition group-hover:translate-x-1">
@@ -128,13 +128,13 @@ export default function AboutUsPage() {
                   </span>
                 </a>
                 <a
-                  href="tel:+15550102040"
+                  href="tel:+8801913869082"
                   className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 p-4 transition hover:border-accent/60"
                 >
                   <span>
                     <span className="block text-xs text-white/45">PHONE</span>
                     <span className="mt-1 block font-medium text-white">
-                      +1 (555) 010-2040
+                      +880 1913-869082
                     </span>
                   </span>
                   <span aria-hidden="true" className="text-accent transition group-hover:translate-x-1">
@@ -142,10 +142,7 @@ export default function AboutUsPage() {
                   </span>
                 </a>
               </div>
-              <p className="mt-4 text-xs leading-relaxed text-white/40">
-                Example contact information for this page demo. Replace these
-                details with your real contact channels before launch.
-              </p>
+          
             </div>
           </div>
         </div>
