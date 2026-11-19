@@ -29,8 +29,8 @@ function StudioCard({ studio, onDelete, onStudioUpdated, isDeleting }) {
     const imageUrl = studio.imageUrl || "/banner.jpg";
 
     return (
-        <article className="flex h-32 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06] sm:h-40">
-            <div className="relative h-full w-32 shrink-0 bg-neutral-900 sm:w-56">
+        <article className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06] sm:h-40 sm:flex-row">
+            <div className="relative aspect-[16/8] w-full shrink-0 bg-neutral-900 sm:aspect-auto sm:h-full sm:w-56">
                 <Image
                     src={imageUrl}
                     alt={studio.title || "Studio"}
@@ -41,7 +41,7 @@ function StudioCard({ studio, onDelete, onStudioUpdated, isDeleting }) {
                 />
             </div>
 
-            <div className="grid min-h-0 min-w-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-y-0.5 overflow-hidden p-2 sm:gap-y-1 sm:p-3">
+            <div className="grid min-w-0 flex-1 gap-y-2 p-3 sm:min-h-0 sm:grid-rows-[auto_minmax(0,1fr)_auto_auto] sm:gap-y-1 sm:overflow-hidden sm:p-3">
                 <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
                     <p className="truncate text-[10px] font-bold tracking-[0.12em] text-accent uppercase sm:text-xs sm:tracking-[0.15em]">
                         {studio.category || "Studio"}
@@ -78,7 +78,7 @@ function StudioCard({ studio, onDelete, onStudioUpdated, isDeleting }) {
                         <span className="truncate">View studio</span>
                         <ArrowRight aria-hidden="true" className="size-3.5 shrink-0" />
                     </Link>
-                    <div className="gap-2">
+                    <div className="flex shrink-0 items-center gap-2">
                         <EditStudioDialog
                             studio={studio}
                             onUpdated={onStudioUpdated}
@@ -89,7 +89,7 @@ function StudioCard({ studio, onDelete, onStudioUpdated, isDeleting }) {
                             title="Delete studio"
                             disabled={isDeleting}
                             onClick={() => onDelete(studio)}
-                            className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60"
+                            className="inline-flex size-10 shrink-0 items-center justify-center rounded-lg border border-red-400/30 text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60 sm:size-8"
                         >
                             {isDeleting ? (
                                 <LoaderCircle aria-hidden="true" className="size-4 animate-spin" />

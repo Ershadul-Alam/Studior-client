@@ -29,7 +29,7 @@ function Stat({ label, value, accent = false }) {
   return (
     <div className="bg-neutral-950 px-5 py-5">
       <p className="text-xs font-medium text-white/40">{label}</p>
-      <p className={`mt-2 text-base font-bold ${accent ? "text-accent" : "text-white"}`}>
+      <p className={`mt-2 break-words text-base font-bold ${accent ? "text-accent" : "text-white"}`}>
         {value}
       </p>
     </div>
@@ -115,7 +115,7 @@ async function StudioDetail({ params }) {
             {studio.location}
           </span>
         </div>
-        <h1 className="mt-4 max-w-4xl text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <h1 className="mt-4 max-w-4xl break-words text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
           {studio.title}
         </h1>
       </div>
@@ -215,7 +215,7 @@ async function StudioDetail({ params }) {
 
 export default function StudioDetailPage({ params }) {
   return (
-    <section className="bg-neutral-950 py-28">
+    <section className="bg-neutral-950 pb-20 pt-28 sm:py-28">
       <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-10">
         <Link
           href="/studios"

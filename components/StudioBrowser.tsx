@@ -48,8 +48,8 @@ const hiddenCategories = new Set(["sound stage"]);
 
 function StudioCard({ studio }: { studio: Studio }) {
   return (
-    <Card className="flex flex-col overflow-hidden rounded-2xl bg-neutral-900 ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:ring-accent/50 hover:shadow-xl hover:shadow-accent/10">
-      <div className="relative h-48 shrink-0">
+    <Card className="flex flex-col gap-2 overflow-hidden rounded-2xl bg-neutral-900 py-2 ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:ring-accent/50 hover:shadow-xl hover:shadow-accent/10 sm:gap-(--card-spacing) sm:py-(--card-spacing)">
+      <div className="relative h-24 shrink-0 sm:h-48">
         <Image
           src={studio.imageUrl}
           alt={studio.title}
@@ -58,41 +58,41 @@ function StudioCard({ studio }: { studio: Studio }) {
           className="object-cover"
           unoptimized={studio.imageUrl.startsWith("data:")}
         />
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-neutral-950/80 px-2.5 py-1 text-xs font-bold text-white backdrop-blur">
-          <Star className="size-3.5 fill-accent text-accent" />
+        <span className="absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-neutral-950/80 px-2 py-1 text-[11px] font-bold text-white backdrop-blur sm:right-3 sm:top-3 sm:gap-1.5 sm:px-2.5 sm:text-xs">
+          <Star className="size-3 fill-accent text-accent sm:size-3.5" />
           {studio.rating}
         </span>
       </div>
 
-      <CardContent className="flex flex-1 flex-col gap-3 px-5">
-        <p className="text-xs font-bold tracking-[0.15em] text-accent uppercase">
+      <CardContent className="flex flex-1 flex-col gap-2 px-3 sm:gap-3 sm:px-5">
+        <p className="truncate text-[10px] font-bold tracking-[0.12em] text-accent uppercase sm:text-xs sm:tracking-[0.15em]">
           {studio.category}
         </p>
-        <CardTitle className="text-xl font-bold tracking-tight text-white">
+        <CardTitle className="line-clamp-2 text-base leading-tight font-bold tracking-tight text-white sm:text-xl">
           {studio.title}
         </CardTitle>
 
-        <p className="flex items-center gap-2 text-sm text-white/60">
-          <MapPin className="size-4 shrink-0 text-accent" />
+        <p className="flex items-center gap-1.5 text-xs text-white/60 sm:gap-2 sm:text-sm">
+          <MapPin className="size-3.5 shrink-0 text-accent sm:size-4" />
           <span className="truncate">{studio.location}</span>
         </p>
 
-        <div className="mt-1 flex items-center justify-between gap-3 border-t border-white/10 pt-3 text-sm">
-          <p className="flex items-center gap-2 text-white/70">
-            <Clock className="size-4 text-accent" />
+        <div className="mt-0.5 flex items-center justify-between gap-2 border-t border-white/10 pt-2 text-xs sm:mt-1 sm:gap-3 sm:pt-3 sm:text-sm">
+          <p className="flex items-center gap-1.5 whitespace-nowrap text-white/70 sm:gap-2">
+            <Clock className="size-3.5 text-accent sm:size-4" />
             ${studio.hourlyRate}/hr
           </p>
-          <p className="flex items-center gap-2 text-white/70">
-            <Users className="size-4 text-accent" />
+          <p className="flex items-center gap-1.5 whitespace-nowrap text-white/70 sm:gap-2">
+            <Users className="size-3.5 text-accent sm:size-4" />
             Up to {studio.maxCapacity}
           </p>
         </div>
       </CardContent>
 
-      <CardFooter className="px-5 pt-4 pb-5">
+      <CardFooter className="px-3 py-2 bg-neutral-900 sm:px-5 sm:py-4">
         <Link
           href={`/studios/${extractId(studio)}`}
-          className="inline-flex w-full items-center justify-center rounded-lg bg-accent py-3 text-[15px] font-semibold text-white transition hover:bg-accent/90"
+          className="inline-flex w-full items-center justify-center rounded-lg bg-accent py-2 text-sm font-semibold text-white transition hover:bg-accent/90 sm:py-3 sm:text-[15px]"
         >
           View Details
         </Link>
@@ -155,7 +155,7 @@ export default function StudioBrowser({
       <div
         role="tablist"
         aria-label="Filter studios by category"
-        className="mt-10 flex flex-wrap gap-2.5"
+        className="mt-8 flex flex-wrap gap-2 sm:mt-10 sm:gap-2.5"
       >
         {tabs.map((tab) => (
           <button
@@ -163,7 +163,7 @@ export default function StudioBrowser({
             role="tab"
             aria-selected={selected === tab.key}
             onClick={() => setSelected(tab.key)}
-            className={`rounded-full border px-5 py-2 text-sm font-semibold transition ${
+            className={`rounded-full border px-3.5 py-2 text-sm font-semibold transition sm:px-5 ${
               selected === tab.key
                 ? "border-accent bg-accent text-white"
                 : "border-white/10 bg-white/5 text-white/70 hover:border-white/25 hover:text-white"

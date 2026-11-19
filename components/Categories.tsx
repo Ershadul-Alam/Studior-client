@@ -206,7 +206,7 @@ async function CategoryGrid() {
 
 export default function Categories() {
   return (
-    <section className="bg-neutral-950 py-24">
+    <section className="bg-neutral-950 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

@@ -88,9 +88,9 @@ const BookingCard = ({ studio }) => {
     return (
         <aside className="lg:sticky lg:top-28">
             <div className="rounded-2xl border border-white/10 bg-neutral-900 p-6 shadow-2xl shadow-black/40">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-start justify-between gap-3 sm:gap-4">
                     <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-bold tracking-tight text-accent">
+                        <span className="text-3xl font-bold tracking-tight text-accent sm:text-4xl">
                             {formatPrice(studio.hourlyRate)}
                         </span>
                         <span className="text-sm text-white/50">/ hour</span>
@@ -159,9 +159,9 @@ const BookingCard = ({ studio }) => {
                                         {studio.title || "Creative workspace"}
                                     </h3>
                                     {studio.location && (
-                                        <p className="mt-2 flex items-center gap-1.5 text-sm text-white/55">
+                                        <p className="mt-2 flex min-w-0 items-start gap-1.5 text-sm text-white/55">
                                             <MapPin className="size-4 shrink-0 text-accent" />
-                                            {studio.location}
+                                            <span className="break-words">{studio.location}</span>
                                         </p>
                                     )}
                                 </div>

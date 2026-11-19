@@ -34,15 +34,15 @@ function FeaturedStudioCard({ studio }) {
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-neutral-950 via-neutral-950/75 to-neutral-950/10" />
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-neutral-950/10" />
 
-      <div className="relative z-10 flex w-full flex-col justify-end p-6 sm:max-w-2xl sm:p-10 lg:p-14">
+      <div className="relative z-10 flex w-full flex-col justify-end p-5 sm:max-w-2xl sm:p-10 lg:p-14">
         <p className="text-xs font-bold tracking-[0.18em] text-accent uppercase">
           {studio.category || "Featured space"}
         </p>
-        <h3 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
+        <h3 className="mt-3 break-words text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
           {studio.title || "A space for your next idea"}
         </h3>
         {studio.location && (
-          <p className="mt-4 flex items-center gap-2 text-sm text-white/70 sm:text-base">
+          <p className="mt-4 flex min-w-0 items-start gap-2 break-words text-sm text-white/70 sm:text-base">
             <MapPin className="size-4 shrink-0 text-accent" />
             {studio.location}
           </p>

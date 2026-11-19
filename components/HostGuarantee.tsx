@@ -32,7 +32,7 @@ export default function HostGuarantee() {
   return (
     <section
       aria-labelledby="host-guarantee-heading"
-      className="relative isolate overflow-hidden border-t border-accent/20 bg-neutral-950 py-24"
+      className="relative isolate overflow-hidden border-t border-accent/20 bg-neutral-950 py-16 sm:py-24"
     >
       <div
         aria-hidden="true"

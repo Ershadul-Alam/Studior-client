@@ -39,7 +39,7 @@ const EditStudioDialog = ({ studio, onUpdated }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const fieldClassName =
-    "mt-1 h-9 rounded-lg border-white/15 bg-neutral-950/80 px-2.5 text-sm text-white shadow-none placeholder:text-white/40 focus-visible:border-accent/70 focus-visible:ring-accent/10";
+    "mt-1 h-11 rounded-lg border-white/15 bg-neutral-950/80 px-2.5 text-sm text-white shadow-none placeholder:text-white/40 focus-visible:border-accent/70 focus-visible:ring-accent/10 sm:h-9";
   const labelClassName = "block text-xs font-medium text-white/80";
 
   async function handleSubmit(event) {
@@ -133,7 +133,7 @@ const EditStudioDialog = ({ studio, onUpdated }) => {
         }
       }}
     >
-      <DialogTrigger className="inline-flex h-7 items-center rounded-lg border border-white/15 px-2 text-xs font-medium text-white/80 transition hover:border-accent/40 hover:text-white">
+      <DialogTrigger className="inline-flex h-10 min-w-10 items-center justify-center rounded-lg border border-white/15 px-3 text-xs font-medium text-white/80 transition hover:border-accent/40 hover:text-white sm:h-8 sm:min-w-0 sm:px-2">
         Edit
       </DialogTrigger>
       <DialogContent className="h-[80vh] max-h-[calc(100dvh-2rem)] max-w-2xl gap-3 overflow-y-auto border border-white/10 bg-neutral-950 p-4 text-white sm:max-w-2xl sm:p-5">

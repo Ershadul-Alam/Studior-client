@@ -4,13 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
-const UserMenu = () => {
+const UserMenu = ({ placement = "header", onSignedOut } = {}) => {
     const { data: session, isPending } = authClient.useSession();
     const router = useRouter();
     const [isSigningOut, setIsSigningOut] = useState(false);
@@ -30,6 +25,7 @@ const UserMenu = () => {
             }
 
             router.replace("/");
+            onSignedOut?.();
         } catch (error) {
             setSignOutError(
                 error instanceof Error
@@ -44,69 +40,42 @@ const UserMenu = () => {
     if (isPending) return null;
 
     if (user) {
-        const name = user.name?.trim() || user.email || "there";
+        if (placement === "menu") {
+            return (
+                <div className="w-fit px-1 pt-1 sm:px-2 sm:pt-2">
+                    <button
+                        type="button"
+                        onClick={handleSignOut}
+                        disabled={isSigningOut}
+                        className="inline-flex w-fit whitespace-nowrap rounded-xl px-2 py-2 text-left text-sm font-medium text-white/90 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60 sm:py-3 sm:text-base"
+                    >
+                        {isSigningOut ? "Signing out..." : "Sign out"}
+                    </button>
+                    {signOutError && (
+                        <p role="alert" className="px-2 py-2 text-sm text-red-300">
+                            {signOutError}
+                        </p>
+                    )}
+                </div>
+            );
+        }
 
-        return (
-            <HoverCard>
-                <HoverCardTrigger
-                    delay={0}
-                    className="inline-flex items-center rounded-full border border-white/20 px-5 py-3 text-[15px] font-semibold text-white transition hover:bg-white/10"
-                >
-                    Welcome, {name}
-                </HoverCardTrigger>
-                <HoverCardContent
-                    align="end"
-                    className="w-48 rounded-xl border border-white/10 bg-neutral-900 p-2 text-white shadow-xl"
-                >
-                    <nav aria-label="Account" className="flex flex-col">
-                        <Link
-                            href="/profile"
-                            className="rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10"
-                        >
-                            Profile
-                        </Link>
-                        <Link
-                            href="/bookings"
-                            className="rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10"
-                        >
-                            Bookings
-                        </Link>
-                        <Link
-                            href="/your-studio"
-                            className="rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/10"
-                        >
-                            Your studio
-                        </Link>
-                        <button
-                            type="button"
-                            onClick={handleSignOut}
-                            disabled={isSigningOut}
-                            className="rounded-lg px-3 py-2.5 text-left text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
-                        >
-                            {isSigningOut ? "Signing out..." : "Sign Out"}
-                        </button>
-                        {signOutError && (
-                            <p role="alert" className="px-3 py-2 text-sm text-red-400">
-                                {signOutError}
-                            </p>
-                        )}
-                    </nav>
-                </HoverCardContent>
-            </HoverCard>
-        );
+        return null;
     }
 
+    if (placement === "menu") return null;
+
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             <Link
                 href="/sign-in"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 px-5 py-3 text-[15px] font-semibold text-white transition hover:bg-white/10"
+                className="inline-flex min-h-10 items-center justify-center rounded-full border border-white/20 px-2 py-2 text-[11px] font-semibold text-white transition hover:bg-white/10 sm:min-h-12 sm:px-5 sm:py-3 sm:text-[15px]"
             >
                 Sign in
             </Link>
             <Link
                 href="/sign-up"
-                className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-[15px] font-semibold text-neutral-900 shadow-lg transition hover:bg-neutral-200"
+                className="inline-flex min-h-10 items-center justify-center rounded-full bg-white px-2 py-2 text-[11px] font-semibold text-neutral-900 shadow-lg transition hover:bg-neutral-200 sm:min-h-12 sm:px-5 sm:py-3 sm:text-[15px]"
             >
                 Sign up
             </Link>

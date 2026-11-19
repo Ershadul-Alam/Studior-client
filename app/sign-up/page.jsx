@@ -117,7 +117,7 @@ export default function SignUpPage() {
                             </label>
                             <input
                                 autoComplete="name"
-                                className="h-10 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10"
+                                className="h-11 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10 sm:h-10"
                                 id="name"
                                 name="name"
                                 placeholder="Your name"
@@ -135,7 +135,7 @@ export default function SignUpPage() {
                             </label>
                             <input
                                 autoComplete="email"
-                                className="h-10 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10"
+                                className="h-11 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10 sm:h-10"
                                 id="email"
                                 name="email"
                                 placeholder="you@example.com"
@@ -154,7 +154,7 @@ export default function SignUpPage() {
                             <div className="relative">
                                 <input
                                     autoComplete="new-password"
-                                    className="h-10 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 pr-10 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10"
+                                    className="h-11 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 pr-11 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10 sm:h-10 sm:pr-10"
                                     id="password"
                                     minLength={8}
                                     name="password"
@@ -165,7 +165,7 @@ export default function SignUpPage() {
                                 <button
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                     aria-pressed={showPassword}
-                                    className="absolute inset-y-0 right-0 inline-flex w-10 items-center justify-center rounded-r-xl text-white/45 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent"
+                                    className="absolute inset-y-0 right-0 inline-flex w-11 items-center justify-center rounded-r-xl text-white/45 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent sm:w-10"
                                     onClick={() => setShowPassword((visible) => !visible)}
                                     type="button"
                                 >
@@ -188,7 +188,7 @@ export default function SignUpPage() {
                             <div className="relative">
                                 <input
                                     autoComplete="new-password"
-                                    className="h-10 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 pr-10 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10"
+                                    className="h-11 w-full rounded-xl border border-white/10 bg-neutral-950/70 px-3 pr-11 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-accent/70 focus:ring-4 focus:ring-accent/10 sm:h-10 sm:pr-10"
                                     id="confirmPassword"
                                     minLength={8}
                                     name="confirmPassword"
@@ -199,7 +199,7 @@ export default function SignUpPage() {
                                 <button
                                     aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                                     aria-pressed={showConfirmPassword}
-                                    className="absolute inset-y-0 right-0 inline-flex w-10 items-center justify-center rounded-r-xl text-white/45 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent"
+                                    className="absolute inset-y-0 right-0 inline-flex w-11 items-center justify-center rounded-r-xl text-white/45 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-accent sm:w-10"
                                     onClick={() => setShowConfirmPassword((visible) => !visible)}
                                     type="button"
                                 >
@@ -223,7 +223,7 @@ export default function SignUpPage() {
                         )}
 
                         <button
-                            className="group inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-white transition hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                            className="group inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-semibold text-white transition hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:h-10"
                             type="submit"
                         >
                             Create account
@@ -242,7 +242,7 @@ export default function SignUpPage() {
                     </div>
                     <button
                         onClick={handleGoogleSignIn}
-                        className="btn mt-3 h-10 min-h-10 w-full rounded-xl border border-white/15 bg-white px-5 text-sm font-semibold text-neutral-900 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-white hover:bg-white/95 hover:shadow-xl hover:shadow-black/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-0"
+                        className="btn mt-3 h-11 min-h-11 w-full rounded-xl border border-white/15 bg-white px-5 text-sm font-semibold text-neutral-900 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-white hover:bg-white/95 hover:shadow-xl hover:shadow-black/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-0 sm:h-10 sm:min-h-10"
                         type="button"
                     >
                         <svg aria-hidden="true" className="size-5 shrink-0" viewBox="0 0 48 48">

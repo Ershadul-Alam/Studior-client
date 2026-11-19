@@ -60,8 +60,8 @@ function BookingCard({ booking, studio, onCancel, isCancelling }) {
     const status = booking.status || "pending";
 
     return (
-        <article className="flex h-32 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06] sm:h-40">
-            <div className="relative h-full w-32 shrink-0 bg-neutral-900 sm:w-56">
+        <article className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition hover:border-accent/40 hover:bg-white/[0.06] sm:h-40 sm:flex-row">
+            <div className="relative aspect-[16/8] w-full shrink-0 bg-neutral-900 sm:aspect-auto sm:h-full sm:w-56">
                 <Image
                     src={imageUrl}
                     alt={title}
@@ -72,7 +72,7 @@ function BookingCard({ booking, studio, onCancel, isCancelling }) {
                 />
             </div>
 
-            <div className="grid min-h-0 min-w-0 flex-1 grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-y-0.5 overflow-hidden p-2 sm:gap-y-1 sm:p-3">
+            <div className="grid min-w-0 flex-1 gap-y-2 p-3 sm:min-h-0 sm:grid-rows-[auto_minmax(0,1fr)_auto_auto] sm:gap-y-1 sm:overflow-hidden sm:p-3">
                 <div className="flex min-w-0 items-center justify-between gap-2">
                     <p className="truncate text-[10px] font-bold tracking-[0.12em] text-accent uppercase sm:text-xs sm:tracking-[0.15em]">
                         {studio?.category || "Booking"}
@@ -124,7 +124,7 @@ function BookingCard({ booking, studio, onCancel, isCancelling }) {
                         title="Cancel booking"
                         disabled={!bookingId || isCancelling}
                         onClick={() => onCancel(booking)}
-                        className="inline-flex h-6 shrink-0 items-center justify-center gap-1 rounded-lg border border-red-400/30 px-2 text-xs font-semibold whitespace-nowrap text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60 sm:h-7 sm:px-2.5"
+                        className="inline-flex h-10 shrink-0 items-center justify-center gap-1 rounded-lg border border-red-400/30 px-3 text-xs font-semibold whitespace-nowrap text-red-300 transition hover:bg-red-400/10 hover:text-red-200 disabled:cursor-wait disabled:opacity-60 sm:h-8 sm:px-2.5"
                     >
                         {isCancelling ? (
                             <>

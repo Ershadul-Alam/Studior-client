@@ -117,9 +117,9 @@ export default function AboutUsPage() {
                   href="mailto:kazisourav8@gmail.com"
                   className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 p-4 transition hover:border-accent/60"
                 >
-                  <span>
+                  <span className="min-w-0">
                     <span className="block text-xs text-white/45">EMAIL</span>
-                    <span className="mt-1 block font-medium text-white">
+                    <span className="mt-1 block break-all font-medium text-white">
                       kazisourav8@gmail.com
                     </span>
                   </span>

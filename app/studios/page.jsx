@@ -10,10 +10,10 @@ function SkeletonGrid() {
       {Array.from({ length: 8 }).map((_, index) => (
         <div
           key={index}
-          className="flex flex-col overflow-hidden rounded-2xl bg-neutral-900 ring-1 ring-white/10"
+          className="flex flex-col gap-2 overflow-hidden rounded-2xl bg-neutral-900 py-2 ring-1 ring-white/10 sm:gap-4 sm:py-4"
         >
-          <div className="h-48 animate-pulse bg-white/10" />
-          <div className="flex flex-1 flex-col gap-3 px-5 py-5">
+          <div className="h-24 animate-pulse bg-white/10 sm:h-48" />
+          <div className="flex flex-1 flex-col gap-2 px-3 py-3 sm:gap-3 sm:px-5 sm:py-5">
             <div className="h-3 w-24 animate-pulse rounded bg-white/10" />
             <div className="h-5 w-3/4 animate-pulse rounded bg-white/10" />
             <div className="h-3 w-1/2 animate-pulse rounded bg-white/10" />
@@ -22,7 +22,7 @@ function SkeletonGrid() {
               <div className="h-3 w-16 animate-pulse rounded bg-white/10" />
               <div className="h-3 w-16 animate-pulse rounded bg-white/10" />
             </div>
-            <div className="mt-3 h-10 animate-pulse rounded-lg bg-white/10" />
+            <div className="mt-1 h-8 animate-pulse rounded-lg bg-white/10 sm:mt-3 sm:h-10" />
           </div>
         </div>
       ))}
@@ -57,7 +57,7 @@ async function StudioGrid({ searchParams }) {
 
 export default function StudiosPage({ searchParams }) {
   return (
-    <section className="min-h-screen bg-neutral-950 py-32">
+    <section className="min-h-screen bg-neutral-950 pb-20 pt-28 sm:py-32">
       <div className="mx-auto w-full max-w-[1400px] px-6 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

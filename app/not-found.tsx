@@ -21,7 +21,7 @@ export default function NotFound() {
         <p className="mb-5 text-xs font-semibold tracking-[0.3em] text-accent uppercase">
           Error 404
         </p>
-        <h1 className="text-6xl leading-none font-semibold tracking-tight sm:text-8xl md:text-9xl">
+        <h1 className="text-5xl leading-none font-semibold tracking-tight sm:text-8xl md:text-9xl">
           Lost in the
           <br />
           <span className="text-accent">wrong scene.</span>

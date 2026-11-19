@@ -50,7 +50,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="relative isolate scroll-mt-24 overflow-hidden border-t border-accent/20 bg-neutral-950 pt-4 pb-24"
+      className="relative isolate scroll-mt-24 overflow-hidden border-t border-accent/20 bg-neutral-950 pt-4 pb-16 sm:pb-24"
     >
       <div
         aria-hidden="true"
