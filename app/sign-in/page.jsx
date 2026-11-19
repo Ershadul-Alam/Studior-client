@@ -10,7 +10,7 @@ export default function SignInPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [notice, setNotice] = useState("");
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const user = Object.fromEntries(formData.entries())
@@ -30,6 +30,16 @@ export default function SignInPage() {
             console.log(data);
             redirect('/')
         }
+    };
+
+    const handleGoogleSignIn = async () => {
+        const data = await authClient.signIn.social({
+            provider: "google",
+            callbackURL: "/",
+        });
+        if (error) {
+            setNotice(error.message || "Google sign-in failed.");
+        }
     }
 
     return (
@@ -42,8 +52,12 @@ export default function SignInPage() {
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-40 bottom-0 size-[30rem] rounded-full bg-red-950/30 blur-[130px]"
             />
+            <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-br from-accent/[0.08] via-transparent to-red-950/35"
+            />
 
-            <div className="relative mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
+            <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1fr_0.85fr] lg:gap-20">
                 <section className="max-w-xl">
                     <div className="inline-flex items-center gap-2 rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm font-medium text-accent">
                         <Sparkles aria-hidden="true" className="size-4" />
@@ -163,6 +177,27 @@ export default function SignInPage() {
                             />
                         </button>
                     </form>
+                    <div className="mt-6 flex items-center gap-4" aria-hidden="true">
+                        <span className="h-px flex-1 bg-white/10" />
+                        <span className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/40">
+                            Or continue with
+                        </span>
+                        <span className="h-px flex-1 bg-white/10" />
+                    </div>
+                    <button
+                        onClick={handleGoogleSignIn}
+                        className="btn mt-4 h-12 min-h-12 w-full rounded-xl border border-white/15 bg-white px-5 text-sm font-semibold text-neutral-900 shadow-lg shadow-black/10 transition hover:-translate-y-0.5 hover:border-white hover:bg-white/95 hover:shadow-xl hover:shadow-black/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:translate-y-0"
+                        type="button"
+                    >
+                        <svg aria-hidden="true" className="size-5 shrink-0" viewBox="0 0 48 48">
+                            <path fill="#4285F4" d="M43.611 20.083H42V20H24v8h11.303c-1.65 4.657-6.108 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+                            <path fill="#34A853" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+                            <path fill="#FBBC05" d="M24 44c5.166 0 9.86-1.977 13.409-5.193l-6.19-5.238C29.166 35.217 26.715 36 24 36c-5.177 0-9.565-3.297-11.229-7.906l-6.522 5.025C9.56 39.556 16.227 44 24 44z" />
+                            <path fill="#EA4335" d="M43.611 20.083H42V20H24v8h11.303a12.02 12.02 0 01-4.09 5.569l6.19 5.238C41.576 35.44 44 30.185 44 24c0-1.341-.138-2.65-.389-3.917z" />
+                        </svg>
+                        Login with Google
+                    </button>
+
 
                     <p className="mt-7 text-center text-sm text-white/55">
                         New to Studior?{" "}
