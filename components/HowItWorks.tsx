@@ -1,23 +1,47 @@
-import { ArrowRight, CalendarDays, Building2 } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarCheck,
+  CalendarDays,
+  Clock,
+  Search,
+} from "lucide-react";
 
 const steps = [
   {
     number: "01",
-    title: "Find a space and book",
+    title: "Discover Spaces",
     description:
-      "Explore creative studios by category, compare the details, then choose a date and send a booking request. Your reservations are easy to find in your account.",
+      "Explore creative studios by location, category, and amenities to find the right space for your shoot or project.",
     href: "/studios",
-    linkLabel: "Explore studios",
-    icon: CalendarDays,
+    linkLabel: "Explore spaces",
+    icon: Search,
   },
   {
     number: "02",
-    title: "List your own studio",
+    title: "Select Shoot Hours",
     description:
-      "Have a space to share? Add its photos, location, rates, amenities, and other details so creators can discover a studio that fits their next project.",
-    href: "/add-studio",
-    linkLabel: "Add your studio",
-    icon: Building2,
+      "Choose the date and hours that fit your schedule, then review availability and pricing before booking.",
+    href: "/studios",
+    linkLabel: "Check availability",
+    icon: Clock,
+  },
+  {
+    number: "03",
+    title: "Book Instantly",
+    description:
+      "Confirm your selected studio and shoot time in a few quick steps, with no waiting for availability.",
+    href: "/studios",
+    linkLabel: "Book a studio",
+    icon: CalendarCheck,
+  },
+  {
+    number: "04",
+    title: "Create & Produce",
+    description:
+      "Arrive at your studio, bring your vision to life, and make the most of a space built for creative work.",
+    href: "/studios",
+    linkLabel: "Start creating",
+    icon: CalendarDays,
   },
 ];
 
@@ -26,7 +50,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       aria-labelledby="how-it-works-heading"
-      className="relative isolate scroll-mt-24 overflow-hidden border-t border-accent/20 bg-neutral-950 py-24"
+      className="relative isolate scroll-mt-24 overflow-hidden border-t border-accent/20 bg-neutral-950 pt-4 pb-24"
     >
       <div
         aria-hidden="true"
@@ -96,6 +120,7 @@ export default function HowItWorks() {
             );
           })}
         </div>
+
       </div>
     </section>
   );
